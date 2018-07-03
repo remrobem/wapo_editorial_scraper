@@ -24,12 +24,47 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Import routes and give the server access to them.
+// var routes = require("./controllers/controller.js");
+
+// app.use(routes);
+
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/wapo_editorials");
 
 // Routes
 
-// A GET route for scraping the echoJS website
+
+app.get("/", function(req, res) {
+console.log("in the get")
+    // Grab every document in the Articles collection
+    db.Article.find({})
+      .then(function(dbArticle) {
+    //    console.log(dbArticle);
+      // If we were able to successfully find Articles, send them back to the client
+      // res.json(dbArticle);
+       var articleData = {
+         data: dbArticle
+       }
+    //   console.log('Article Data ' + articleData.data);
+  
+       res.render('index', articleData);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        console.log("Error: " + err)
+        res.json(err);
+      });
+  });
+  
+
+
 app.get("/scrape", function (req, res) {
     // First, we grab the body of the html with request
     request("https://www.washingtonpost.com/opinions/", function (error, response, body) {

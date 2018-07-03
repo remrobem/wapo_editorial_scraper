@@ -1,0 +1,13 @@
+header {
+    background-image: url("../images/background.jpg");
+    /* background-size: cover; */
+}
+
+.nav-logo {
+    height: 90%;
+    width: 90%
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger:hover.active, .open>.dropdown-toggle.btn-danger {
+    background-color: green;
+}
