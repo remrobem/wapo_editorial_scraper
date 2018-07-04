@@ -1,0 +1,73 @@
+<!-- Navigation Bar -->
+<div class="container-fluid">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Mongo Scraper</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a href="#">Saved Articles</a>
+          </li>
+        </ul>
+        <form action="/scrape" method="POST" class="navbar-form navbar-left">
+          <button type="submit" class="btn btn-danger nav-item">Scrape New Op-Ed Articles</button>
+        </form>
+
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+</div>
+
+<!-- Heading -->
+<header>
+  <div class="container-fluid">
+    <div class="jumbotron-fluid">
+      <div class="container-fluid header">
+        <h1 class="display-4">Editorial Scraper</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
+          information.
+        </p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- List of articles -->
+<div class="container-fluid article-container">
+  {{#each data}}
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{this.title}} 
+        {{#if saved}}
+          <button type="submit" class="btn btn-purple pull-right" id="notesBtn" data-id={{this.id}}>Article Notes</button>
+          <button type="submit" class="btn btn-danger pull-right" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
+        {{else}}
+          <button type="submit" class="btn btn-success pull-right" id="saveBtn" data-id={{this.id}}>Save Article</button>
+        {{/if}}
+      </h3>
+    </div>
+    <div class="panel-body">
+      {{this.description}}
+    </div>
+  </div>
+  {{/each}}
+</div>

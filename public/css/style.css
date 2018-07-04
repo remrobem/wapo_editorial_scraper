@@ -1,13 +1,37 @@
 header {
     background-image: url("../images/background.jpg");
-    /* background-size: cover; */
+    background-size: cover;
 }
 
-.nav-logo {
+/* .nav-logo {
     height: 90%;
     width: 90%
+} */
+
+.nav-item:hover, .nav-item:focus, .nav-item:active, .nav-item:hover.active, .open>.dropdown-toggle.nav-item{
+    background-color: green;
+    border-color: green;
 }
 
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger:hover.active, .open>.dropdown-toggle.btn-danger {
     background-color: green;
+    border-color: green;
+   
+}
+
+.article-container {
+    background-image: url("../images/newsprint-background.jpg");
+    background-size: cover;
+}
+
+.panel-title {
+    font-size: 4rem;
+}
+
+.btn-purple {
+    background-color: purple;
+}
+
+#notesBtn {
+    margin-left: 10px;
 }
