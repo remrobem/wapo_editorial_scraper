@@ -17,12 +17,14 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>        
           <li class="nav-item">
-            <a href="#">Saved Articles</a>
+          <li><a href="/saved">Saved Articles</a></li>
+          <button type="submit" class="btn btn-danger nav-item" id="scrapeBtn">Scrape New Op-Ed Articles</button>
           </li>
         </ul>
         {{!-- <form action="/scrape" method="POST" class="navbar-form navbar-left"> --}}
-          <button type="submit" class="btn btn-danger nav-item" id="scrapeBtn">Scrape New Op-Ed Articles</button>
+          
         {{!-- </form> --}}
 
       </div>
