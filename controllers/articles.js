@@ -19,6 +19,12 @@ router.get("/", function(req, res) {
       };
       //   console.log('Article Data ' + articleData.data);
 
+      // get notes and append to articleData. then in HB, need to each loop for data or notes
+      // {
+      //   data: [],
+      //   notes: []
+      // }
+
       res.render("articles", articleData);
     })
     .catch(function(err) {
