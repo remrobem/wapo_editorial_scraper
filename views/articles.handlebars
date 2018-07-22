@@ -1,27 +1,28 @@
  {{> heading}}
 <!-- List of articles -->
-<div class="container-fluid article-container">
-    {{#each data}}
+<div class="container-fluid">
+  {{#each data}}
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                {{title}} {{#if saved}} {{!--
-                <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
-                <button type="submit" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal" data-id={{this.id}}>
-                    Article Notes
-                </button>
-                <button type="submit" class="btn btn-danger pull-right deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
-                {{else}}
-                <button type="submit" class="btn btn-success pull-right saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
-                {{/if}}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {{description}}
-        </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{title}} {{#if saved}} {{!--
+        <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
+        <button type="submit" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal"
+          data-id={{this.id}}>
+          Article Notes
+        </button>
+        <button type="submit" class="btn btn-danger pull-right deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
+        {{else}}
+        <button type="submit" class="btn btn-success pull-right saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
+        {{/if}}
+      </h3>
     </div>
-    {{/each}}
+    <div class="panel-body">
+      {{description}}
+    </div>
+  </div>
+  {{/each}}
 </div>
 
 <!-- Notes Modal -->
@@ -30,19 +31,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="notesModalLabel">Notes for Article <span id="article_id"></span></h5>
+        <h5 class="modal-title" id="notesModalLabel">Notes for Article
+          <span id="article_id"></span>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div id="newNote"></div>
-        <div>hello{{data}}</div>
-        <div><i class="fa fa-trash pull-right center-block"></i></div>
-        <textarea readonly maxlength="500" rows="5" placeholder="No notes exist yet" id="existingNote" width="100%"></textarea>
-        <textarea autofocus maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
-        
-
+        <div id="existingNote"></div>
+        <div>
+          <textarea autofocus id="newNote" maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -11,7 +11,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Mongo Scraper</a>
+        {{!-- <a class="navbar-brand" href="#"></a> --}}
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -20,9 +20,15 @@
           <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>        
           <li class="nav-item">
           <li><a href="/saved">Saved Articles</a></li>
-          <button type="submit" class="btn btn-danger nav-item" id="scrapeBtn">Scrape New Op-Ed Articles</button>
-          </li>
-        </ul>
+          
+          <button type="submit" class="btn btn-danger nav-item" id="scrapeBtn">Scrape New Op-Ed Articles</button>        
+        
+         <li class=" lead pull-right">
+                The Washington Post 
+        </li>
+       
+</ul>
+      </div>
         {{!-- <form action="/scrape" method="POST" class="navbar-form navbar-left"> --}}
           
         {{!-- </form> --}}
@@ -35,44 +41,20 @@
 </div>
 
 <!-- Heading -->
-<header>
-  <div class="container-fluid">
+{{!-- <header>
+  <div class="container-fluid ">
     <div class="jumbotron-fluid">
       <div class="container-fluid header">
-        <h1 class="display-4">Editorial Scraper</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
-          information.
-        </p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <h1 class="display-4 article-container"></h1>
+        <p class="lead">The Washington Post 
+        </p> --}}
+        {{!-- <hr class="my-4"> --}}
+        {{!-- <p class="subtitle">Op-Ed Scraper</p>
 
       </div>
     </div>
-  </div>
-  <div class="container-fluid article-container">
-    {{#each data}}
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                {{title}} {{#if saved}} {{!--
-                <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
-                <button type="submit" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal" data-id={{this.id}}>
-                    Article Notes
-                </button>
-                <button type="submit" class="btn btn-danger pull-right deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
-                {{else}}
-                <button type="submit" class="btn btn-success pull-right saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
-                {{/if}}
-            </h3>
-        </div>
-        <div class="panel-body">
-            {{description}}
-        </div>
-    </div>
-    {{/each}}
-</div>
-
+  </div> --}}
+  
 </header>
 
 

@@ -50,19 +50,29 @@ $(document).ready(function() {
   // show article notes. runs when the modal is about to be shown (show.bs.modal event)
   $("#notesModal").on("show.bs.modal", function(e) {
     let article_id = $(e.relatedTarget).data("id");
-    // Empty the notes from the note section
-    $("#newNote").empty();
 
+    // Empty the text for a new note
+    $("#newNote").val("");
+    // get rid of the existing notes displayed last time
+    $("#existingNote").empty();
+ 
     // Save the id from the button tag
-    console.log(`modal article: ${article_id}`);
+   
     $("#article_id").text(article_id);
 
-    // Now make an ajax call for the Article
+    // Now make an ajax call to get the Article notes
     $.ajax({
       method: "GET",
       url: "/article/" + article_id
-    }).then(function(data) {
-      console.log(data);
+    }).then(function(article) {
+     
+      $.each(article.notes, function(_, object) {
+        $("#existingNote").append(
+          ` <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet" width="100%">${
+            object.note
+          }</textarea>`
+        );
+      });
     });
   });
 
@@ -78,12 +88,14 @@ $(document).ready(function() {
       method: "POST",
       url: "/note/" + article_id.textContent,
       data: {
-        note: $("#addNote").val().trim()
+        note: $("#newNote")
+          .val()
+          .trim()
       }
-    })
-      .then(function(data) {
-        console.log(`note added`);
-      });
+    }).then(function(data) {
+     
+      location.reload(true);
+    });
     // Also, remove the values entered in the input and textarea for note entry
     // $("#bodyinput").val("");
   });
