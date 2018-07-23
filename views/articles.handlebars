@@ -1,28 +1,51 @@
  {{> heading}}
 <!-- List of articles -->
 <div class="container-fluid">
-  {{#each data}}
-
+  {{#if data}} {{#each data}}
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{title}} {{#if saved}} {{!--
-        <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
-        <button type="submit" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal"
-          data-id={{this.id}}>
-          Article Notes
-        </button>
-        <button type="submit" class="btn btn-danger pull-right deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
-        {{else}}
-        <button type="submit" class="btn btn-success pull-right saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
-        {{/if}}
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-9">
+              <a href={{link}} target="_blank">{{title}}</a>
+            </div>
+            <div class="col-xs-3">
+              {{#if saved}}
+              <button type="submit" class="btn btn-purple pull-right btn-sm notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal"
+                data-id={{this.id}}>
+                Article Notes
+              </button>
+              <button type="submit" class="btn btn-danger pull-right btn-sm deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
+              {{else}}
+              <button type="submit" class="btn btn-success pull-right btn-sm saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
+              {{/if}}
+            </div>
+          </div>
+        </div>
       </h3>
     </div>
     <div class="panel-body">
       {{description}}
     </div>
   </div>
-  {{/each}}
+  {{/each}} {{else}}
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-9">
+              No data to show. Please Scrape New Op-Ed Articles or check for Saved Articles
+            </div>
+            <div class="col-3">
+            </div>
+          </div>
+        </div>
+      </h3>
+    </div>
+  </div>
+  {{/if}}
 </div>
 
 <!-- Notes Modal -->
@@ -41,7 +64,7 @@
       <div class="modal-body">
         <div id="existingNote"></div>
         <div>
-          <textarea autofocus id="newNote" maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
+          <textarea id="newNote" maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
         </div>
       </div>
       <div class="modal-footer">

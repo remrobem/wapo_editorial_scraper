@@ -3,7 +3,6 @@ $(document).ready(function() {
   $(".saveBtn").on("click", function(e) {
     e.preventDefault();
     let articleId = $(this).data("id");
-    console.log("in save " + articleId);
 
     $.ajax({
       type: "POST",
@@ -55,9 +54,9 @@ $(document).ready(function() {
     $("#newNote").val("");
     // get rid of the existing notes displayed last time
     $("#existingNote").empty();
- 
+
     // Save the id from the button tag
-   
+
     $("#article_id").text(article_id);
 
     // Now make an ajax call to get the Article notes
@@ -65,53 +64,77 @@ $(document).ready(function() {
       method: "GET",
       url: "/article/" + article_id
     }).then(function(article) {
-     
-      $.each(article.notes, function(_, object) {
+      if (article.notes.length > 0) {
+        $.each(article.notes, function(_, note) {
+          $("#existingNote").append(
+            `
+          <div class="container-fluid">
+            <div class="row" data-rownote=${note._id}>
+              <div class="row-height">
+                <div class="col-sm-11 col-height">
+                  <textarea id="existingNote" readonly maxlength="500" rows="5" >${
+                    note.note
+                  }</textarea>
+                </div>
+                <div class="col-sm-1 col-height col-middle">
+                  <button type="submit" class="btn btn-danger btn-sm" id="deleteNoteBtn" data-note=${
+                    note._id
+                  } data-id=${article_id}>X</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          `
+          );
+        });
+      } else {
         $("#existingNote").append(
-          ` <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet" width="100%">${
-            object.note
-          }</textarea>`
+          `
+        <div class="container-fluid">
+          <div class="row">
+            <div class="row-height">
+              <div class="col-sm-11 col-height">
+                <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        `
         );
-      });
+      }
     });
   });
 
   // modal
 
-  // save note in the modal
   $("#saveNoteBtn").on("click", function(e) {
     e.preventDefault();
-
-    console.log(`save note id: ${article_id.textContent}`);
-    // Run a POST request to change the note, using what's entered in the inputs
-    $.ajax({
-      method: "POST",
-      url: "/note/" + article_id.textContent,
-      data: {
-        note: $("#newNote")
-          .val()
-          .trim()
-      }
-    }).then(function(data) {
-     
-      location.reload(true);
-    });
-    // Also, remove the values entered in the input and textarea for note entry
-    // $("#bodyinput").val("");
+    if ($("#newNote").val()) {
+      $.ajax({
+        method: "POST",
+        url: "/note/" + article_id.textContent,
+        data: {
+          note: $("#newNote")
+            .val()
+            .trim()
+        }
+      }).then(function(data) {
+        location.reload(true);
+      });
+    }
   });
 
-  // When you click the deletenote button
-  $(document).on("click", "#deletenote", function() {
-    // Grab the id associated with the note
-    var article_id = $(this).attr("data-id");
-    // Run a POST request to delete the note
+  $(document).on("click", "#deleteNoteBtn", function() {
+    let article_id = $(this).attr("data-id");
+    let note_id = $(this).attr("data-note");
+    // use POST to delete the note
     $.ajax({
-      method: "GET",
-      url: "/notes/" + article_id
-    })
-      // With that done
-      .done(function(data) {
-        $("#" + data._id).remove();
-      });
+      method: "POST",
+      url: "/deletenote?" + "article=" + article_id + "&note=" + note_id
+    }).then(function(data) {
+      $("[data-rownote=" + data + "]").remove();
+    });
   });
 });

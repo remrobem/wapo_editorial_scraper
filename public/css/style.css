@@ -79,3 +79,35 @@ textarea {
   background-color: white;
   text-align: center;
 }
+
+.displayNote div {
+  vertical-align: middle;
+}
+
+textarea {
+  width: 100%;
+}
+
+
+
+.row-height {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.col-height {
+  display: table-cell;
+  float: none;
+  height: 100%;
+}
+
+.col-middle {
+  vertical-align: middle;
+}
+
+a, u {
+  text-decoration: none !important;
+  color: white;
+}
