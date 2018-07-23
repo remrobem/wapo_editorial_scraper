@@ -106,3 +106,8 @@ textarea {
 .col-middle {
   vertical-align: middle;
 }
+
+a, u {
+  text-decoration: none !important;
+  color: white;
+}

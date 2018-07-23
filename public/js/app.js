@@ -111,7 +111,7 @@ $(document).ready(function() {
 
   $("#saveNoteBtn").on("click", function(e) {
     e.preventDefault();
-    if ($("#newNote").length > 1) {
+    if ($("#newNote").val()) {
       $.ajax({
         method: "POST",
         url: "/note/" + article_id.textContent,

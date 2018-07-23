@@ -105,7 +105,7 @@ router.post("/scrape", function(req, res) {
         .text();
       result.saved = false;
 
-
+      
       db.Article.create(result)
         .then(dbArticle => {})
         .catch(err => {
