@@ -13,12 +13,10 @@ var db = require("./models");
 
 var PORT = process.env.PORT || 3001;
 
-
 // Initialize Express
 var app = express();
 
 // Configure middleware
-
 
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,17 +35,25 @@ var routes = require("./controllers/articles.js");
 app.use("/", routes);
 
 // Connect to Mongodb and check for erors
-mongoose.connect("mongodb://localhost/wapo_editorials");
+
+var databaseUri = "mongodb://localhost/wapo_editorials";
+
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  mongoose.connect(databaseUri);
+}
+
 var mongoose = mongoose.connection;
-mongoose.on("error", function (error) {
-    console.log("Mongoose Error: ", error);
+mongoose.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
 });
 
-mongoose.once("open", function () {
-    console.log("Mongoose connection successful.");
+mongoose.once("open", function() {
+  console.log("Mongoose connection successful.");
 });
 
 // Start the server
-app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
 });
