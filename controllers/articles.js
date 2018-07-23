@@ -7,7 +7,6 @@ mongoose.Promise = Promise;
 const db = require("../models/");
 
 router.get("/", function(req, res) {
-  console.log("in the get");
 
   db.Article.find({})
     .then(function(dbArticle) {
@@ -23,7 +22,6 @@ router.get("/", function(req, res) {
 });
 
 router.get("/saved", function(req, res) {
-  console.log("in the saved get");
 
   db.Article.find({ saved: true })
     .then(function(dbArticle) {
@@ -69,7 +67,7 @@ router.post("/deletenote", function(req, res) {
     { $pull: { notes: { _id: req.query.note } } }
   )
     .then(function(dbArticle) {
-      res.json("deleted");
+      res.json(req.query.note);
       // res.redirect("/");
     })
     .catch(function(err) {
@@ -88,7 +86,7 @@ router.post("/scrape", function(req, res) {
     var $ = cheerio.load(body);
 
     $(".story-body").each(function(i, element) {
-      // console.log('after loop')
+  
       var result = {};
 
       result.title = $(this)
@@ -137,7 +135,6 @@ router.get("/articles", function(req, res) {
 });
 
 router.get("/article/:id", function(req, res) {
-  console.log("id in server", req.params.id);
 
   db.Article.findOne({ _id: req.params.id })
     .then(function(dbArticle) {
@@ -149,14 +146,13 @@ router.get("/article/:id", function(req, res) {
 });
 
 router.post("/note/:id", function(req, res) {
-  // Create a new note and pass the req.body to the entry
+ 
   let body = JSON.stringify(req.body);
-  console.log(`note insert ${body}`);
-  console.log(req.params.id);
-
+ 
   db.Article.findOneAndUpdate(
     { _id: req.params.id },
-    { $push: { notes: req.body } }
+    { $push: { notes: req.body } },
+    {new: true}
   )
     .then(function(dbArticle) {
       res.json(dbArticle);

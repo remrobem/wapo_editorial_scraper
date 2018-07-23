@@ -6,16 +6,25 @@
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{title}} {{#if saved}} {{!--
-        <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
-        <button type="submit" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal"
-          data-id={{this.id}}>
-          Article Notes
-        </button>
-        <button type="submit" class="btn btn-danger pull-right deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
-        {{else}}
-        <button type="submit" class="btn btn-success pull-right saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
-        {{/if}}
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-9">
+              {{title}}
+            </div>
+            <div class="col-3">
+              {{#if saved}} {{!--
+              <button type="" class="btn btn-purple pull-right notesBtn" id="notesBtn" data-id={{this.id}}>Article Notes</button> --}}
+              <button type="submit" class="btn btn-purple pull-right btn-sm notesBtn" id="notesBtn" data-toggle="modal" data-target="#notesModal"
+                data-id={{this.id}}>
+                Article Notes
+              </button>
+              <button type="submit" class="btn btn-danger pull-right btn-sm deleteBtn" id="deleteBtn" data-id={{this.id}}>Delete from Saved</button>
+              {{else}}
+              <button type="submit" class="btn btn-success pull-right btn-sm saveBtn" id="saveBtn" data-id={{this.id}}>Save Article</button>
+              {{/if}}
+            </div>
+          </div>
+        </div>
       </h3>
     </div>
     <div class="panel-body">
@@ -41,7 +50,7 @@
       <div class="modal-body">
         <div id="existingNote"></div>
         <div>
-          <textarea autofocus id="newNote" maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
+          <textarea  id="newNote" maxlength="500" rows="5" placeholder="Add a note" id="addNote" width="100%"></textarea>
         </div>
       </div>
       <div class="modal-footer">

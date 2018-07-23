@@ -3,7 +3,7 @@ $(document).ready(function() {
   $(".saveBtn").on("click", function(e) {
     e.preventDefault();
     let articleId = $(this).data("id");
-   
+
     $.ajax({
       type: "POST",
       dataType: "json",
@@ -64,15 +64,15 @@ $(document).ready(function() {
       method: "GET",
       url: "/article/" + article_id
     }).then(function(article) {
-      $.each(article.notes, function(_, note) {
-        $("#existingNote").append(
-          // ` <div><i class="fa fa-trash pull-right center-block" data-note=${note._id} data-id=${article_id}></i></div>
-          `
+      if (article.notes.length > 0) {
+        $.each(article.notes, function(_, note) {
+          $("#existingNote").append(
+            `
           <div class="container-fluid">
-            <div class="row" data-note=${note._id} data-id=${article_id}>
+            <div class="row" data-rownote=${note._id}>
               <div class="row-height">
                 <div class="col-sm-11 col-height">
-                  <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet">${
+                  <textarea id="existingNote" readonly maxlength="500" rows="5" >${
                     note.note
                   }</textarea>
                 </div>
@@ -84,43 +84,57 @@ $(document).ready(function() {
               </div>
             </div>
           </div>
+
           `
+          );
+        });
+      } else {
+        $("#existingNote").append(
+          `
+        <div class="container-fluid">
+          <div class="row">
+            <div class="row-height">
+              <div class="col-sm-11 col-height">
+                <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        `
         );
-      });
+      }
     });
   });
 
   // modal
 
-  
   $("#saveNoteBtn").on("click", function(e) {
     e.preventDefault();
-
-    $.ajax({
-      method: "POST",
-      url: "/note/" + article_id.textContent,
-      data: {
-        note: $("#newNote")
-          .val()
-          .trim()
-      }
-    }).then(function(data) {
-      location.reload(true);
-    });
+    if ($("#newNote").length > 1) {
+      $.ajax({
+        method: "POST",
+        url: "/note/" + article_id.textContent,
+        data: {
+          note: $("#newNote")
+            .val()
+            .trim()
+        }
+      }).then(function(data) {
+        location.reload(true);
+      });
+    }
   });
 
-
   $(document).on("click", "#deleteNoteBtn", function() {
-    
-    var article_id = $(this).attr("data-id");
-    var note_id = $(this).attr("data-note");
+    let article_id = $(this).attr("data-id");
+    let note_id = $(this).attr("data-note");
     // use POST to delete the note
     $.ajax({
       method: "POST",
       url: "/deletenote?" + "article=" + article_id + "&note=" + note_id
-    })
-    .then(function(data) {
-      $("[data-note=note_id]").remove();
+    }).then(function(data) {
+      $("[data-rownote=" + data + "]").remove();
     });
   });
 });
