@@ -3,8 +3,7 @@ $(document).ready(function() {
   $(".saveBtn").on("click", function(e) {
     e.preventDefault();
     let articleId = $(this).data("id");
-    console.log("in save " + articleId);
-
+   
     $.ajax({
       type: "POST",
       dataType: "json",
@@ -55,9 +54,9 @@ $(document).ready(function() {
     $("#newNote").val("");
     // get rid of the existing notes displayed last time
     $("#existingNote").empty();
- 
+
     // Save the id from the button tag
-   
+
     $("#article_id").text(article_id);
 
     // Now make an ajax call to get the Article notes
@@ -65,12 +64,27 @@ $(document).ready(function() {
       method: "GET",
       url: "/article/" + article_id
     }).then(function(article) {
-     
-      $.each(article.notes, function(_, object) {
+      $.each(article.notes, function(_, note) {
         $("#existingNote").append(
-          ` <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet" width="100%">${
-            object.note
-          }</textarea>`
+          // ` <div><i class="fa fa-trash pull-right center-block" data-note=${note._id} data-id=${article_id}></i></div>
+          `
+          <div class="container-fluid">
+            <div class="row" data-note=${note._id} data-id=${article_id}>
+              <div class="row-height">
+                <div class="col-sm-11 col-height">
+                  <textarea id="existingNote" readonly maxlength="500" rows="5" placeholder="No notes exist yet">${
+                    note.note
+                  }</textarea>
+                </div>
+                <div class="col-sm-1 col-height col-middle">
+                  <button type="submit" class="btn btn-danger btn-sm" id="deleteNoteBtn" data-note=${
+                    note._id
+                  } data-id=${article_id}>X</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          `
         );
       });
     });
@@ -78,12 +92,10 @@ $(document).ready(function() {
 
   // modal
 
-  // save note in the modal
+  
   $("#saveNoteBtn").on("click", function(e) {
     e.preventDefault();
 
-    console.log(`save note id: ${article_id.textContent}`);
-    // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
       url: "/note/" + article_id.textContent,
@@ -93,25 +105,22 @@ $(document).ready(function() {
           .trim()
       }
     }).then(function(data) {
-     
       location.reload(true);
     });
-    // Also, remove the values entered in the input and textarea for note entry
-    // $("#bodyinput").val("");
   });
 
-  // When you click the deletenote button
-  $(document).on("click", "#deletenote", function() {
-    // Grab the id associated with the note
+
+  $(document).on("click", "#deleteNoteBtn", function() {
+    
     var article_id = $(this).attr("data-id");
-    // Run a POST request to delete the note
+    var note_id = $(this).attr("data-note");
+    // use POST to delete the note
     $.ajax({
-      method: "GET",
-      url: "/notes/" + article_id
+      method: "POST",
+      url: "/deletenote?" + "article=" + article_id + "&note=" + note_id
     })
-      // With that done
-      .done(function(data) {
-        $("#" + data._id).remove();
-      });
+    .then(function(data) {
+      $("[data-note=note_id]").remove();
+    });
   });
 });
